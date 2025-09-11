@@ -1,1 +1,2 @@
-# EODP_Oriol_Espejo
+# eodp
+EODP main repository
