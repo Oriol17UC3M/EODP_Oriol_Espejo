@@ -11,7 +11,7 @@ from common.plot.plotMat2D import plotMat2D
 from common.plot.plotF import plotF
 from scipy.signal import convolve2d
 from common.src.auxFunc import getIndexBand
-
+import numpy as np
 class opticalPhase(initIsm):
 
     def __init__(self, auxdir, indir, outdir):
@@ -115,6 +115,25 @@ class opticalPhase(initIsm):
         :return: TOA image 2D in radiances [mW/m2]
         """
         # TODO
+        toa = np.zeros((sgm_toa.shape[0], sgm_toa.shape[1]))
+        isrf, wv_isrf = readIsrf(self.auxdir + '/' + self.ismConfig.isrffile, band)
+        isrf_normalized= isrf / np.sum(isrf)
+        print(np.sum(isrf_normalized))
+        wv_isrf=wv_isrf*1000
+        #Apply the filter
+        for ialt in range(sgm_toa.shape[0]):
+            for iact in range(sgm_toa.shape[1]):
+                cs=interp1d(sgm_wv,sgm_toa[ialt,iact,:],fill_value=(0,0),bounds_error=False)
+                toa_i=cs(wv_isrf)
+                #multiply point by point with isrf_normalized
+                toa[ialt,iact]= np.sum(toa_i * isrf_normalized)
+
+                #sum the resulting vector
+
+
+                #assign to the toa[ialt,iact] position
+
+
         return toa
 
 
