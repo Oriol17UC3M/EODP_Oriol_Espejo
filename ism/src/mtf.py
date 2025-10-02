@@ -169,6 +169,8 @@ class mtf:
         :return: Smearing MTF
         """
         #TODO
+        fnAlt = np.repeat(fnAlt[:,None], ncolumns, axis=1)
+        Hsmear = np.sinc(ksmear*fnAlt)
         return Hsmear
 
     def mtfMotion(self, fn2D, kmotion):
@@ -179,6 +181,7 @@ class mtf:
         :return: detector MTF
         """
         #TODO
+        Hmotion = np.sinc(fn2D * kmotion)
         return Hmotion
 
     def plotMtf(self,Hdiff, Hdefoc, Hwfe, Hdet, Hsmear, Hmotion, Hsys, nlines, ncolumns, fnAct, fnAlt, directory, band):
