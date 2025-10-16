@@ -1,6 +1,7 @@
 
 # LEVEL-1C
 
+
 from l1c.src.initL1c import initL1c
 from common.io.writeToa import writeToa, readToa
 from common.io.readGeodetic import readGeodetic, getCorners
@@ -63,7 +64,15 @@ class l1c(initL1c):
         :return: L1C radiances, L1C latitude and longitude in degrees
         '''
         #TODO
+        tck = bisplrep(lat, lon, toa)
+        m = mgrs.MGRS()
+        """""
+        for iact
+            for ialt
+                mgrs_tiles.add(m.toMGRS(lat[i, j], lon[i, j], True, self.l1cConfig.mgrs_tile_precision)
+
         return lat_l1c, lon_l1c, toa_l1c
+   """""
 
     def checkSize(self, lat,toa):
         '''
@@ -74,3 +83,4 @@ class l1c(initL1c):
         :return: NA
         '''
         #TODO
+

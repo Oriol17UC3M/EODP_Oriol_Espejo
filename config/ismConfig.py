@@ -13,8 +13,10 @@ class ismConfig:
         self.t_int = 0.00672                     # [s] Integration time
 
         # Optical system
-        self.D = 0.150                           # [m] Telescope pupil diameter
-        self.f = 0.5262                          # [m] Focal length
+        #self.D = 0.150                           # [m] Telescope pupil diameter
+        #self.f = 0.5262                          # [m] Focal length
+        self.D = 0.07565                          # [m] Telescope pupil diameter
+        self.f = 0.2345
         self.Tr = 0.99                           # [-] Optical transmittance
         self.wLF = 100e-9                        # [m] RMS of low-frequency wavefront errors
         self.wHF = 100e-9                        # [m] RMS of high-frequency wavefront errors
@@ -75,6 +77,9 @@ class ismConfig:
         # Optical stage. Use the PSF convolution. If False, will use the MTF
         self.do_psf_conv = False
         # Detection stage errors and effects
-        self.apply_prnu = True
-        self.apply_dark_signal = True
-        self.apply_bad_dead = True
+        #self.apply_prnu = True
+        #self.apply_dark_signal = True
+        #self.apply_bad_dead = True
+        self.apply_prnu = False
+        self.apply_dark_signal = False
+        self.apply_bad_dead = False
