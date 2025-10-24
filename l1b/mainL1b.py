@@ -5,11 +5,11 @@ from l1b.src.l1b import l1b
 
 # Directory - this is the common directory for the execution of the E2E, all modules
 auxdir = r'C:\Master\aa\EODP\EODP_Oriol_Espejo\EODP_Oriol_Espejo\auxiliary'
-#indir = r"C:\Master\aa\EODP\EODP-TS-L1B\input" clase 2
-indir = r"C:\\Master\\aa\\EODP\\EODP-TS-E2E\\myismoutputs"
-#outdir = r"C:\\Master\\aa\\EODP\\EODP-TS-L1B\\results_noequalization"
-outdir = r"C:\\Master\\aa\EODP\\EODP-TS-E2E\\myl1boutputs_noeq"
-
+indir = r"C:\Master\aa\EODP\EODP-TS-L1B\input" #clase 2
+#indir = r"C:\\Master\\aa\\EODP\\EODP-TS-E2E\\myismoutputs"
+outdir = r"C:\\Master\\aa\\EODP\\EODP-TS-L1B\\results_noequalization"
+#outdir = r"C:\\Master\\aa\EODP\\EODP-TS-E2E\\myl1boutputs_noeq"
+#outdir = r"C:\\Master\\aa\\EODP\\EODP-TS-L1B\\results"
 # Initialise the ISM
 myL1b = l1b(auxdir, indir, outdir)
 myL1b.processModule()

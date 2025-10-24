@@ -204,4 +204,74 @@ class mtf:
         """
         #TODO
 
+        # Crear el directorio de salida si no existe
+        os.makedirs(directory, exist_ok=True)
 
+        # Índice central ACT (para el corte ALT central)
+        centerAct = len(fnAct) // 2
+
+        # Tomamos el corte ALT (vertical)
+        Hcuts = {
+            "Optics Diffraction MTF": np.abs(Hdiff[:, centerAct]),
+            "Defocus MTF": np.abs(Hdefoc[:, centerAct]),
+            "Wavefront Error Aberrations MTF": np.abs(Hwfe[:, centerAct]),
+            "Detector MTF": np.abs(Hdet[:, centerAct]),
+            "Smearing MTF": np.abs(Hsmear[:, centerAct]),
+            "Motion blur MTF": np.abs(Hmotion[:, centerAct]),
+            "System MTF": np.abs(Hsys[:, centerAct])
+        }
+
+        # Tomamos solo frecuencias positivas (de 0 a 0.5)
+        mask = fnAlt >= 0
+        fnAlt_pos = fnAlt[mask]
+        for key in Hcuts:
+            Hcuts[key] = Hcuts[key][mask]
+
+        # Crear figura
+        plt.figure(figsize=(6, 4))
+
+        # Colores personalizados para mantener consistencia visual
+        colors = {
+            "Optics Diffraction MTF": "black",
+            "Defocus MTF": "red",
+            "Wavefront Error Aberrations MTF": "purple",
+            "Detector MTF": "orange",
+            "Smearing MTF": "gold",
+            "Motion blur MTF": "brown",
+            "System MTF": "green"
+        }
+
+        # Dibujar cada MTF
+        for key, values in Hcuts.items():
+            plt.plot(fnAlt_pos, values, label=f"Central ALT position of the {key}",
+                     color=colors.get(key, None), linewidth=1.2)
+
+        # Línea de Nyquist en 0.5
+        plt.axvline(0.5, color='k', linestyle='--', linewidth=1.0, label="Nyquist Limit")
+
+        # Etiquetas y título
+        plt.xlabel("Spatial frequencies f/(1/w) [-]", fontsize=10)
+        plt.ylabel("MTF Values", fontsize=10)
+        plt.title(f"Central ALT position of the MTFs and Nyquist in band ->{band}", fontsize=11)
+        plt.grid(True, linestyle='--', alpha=0.4)
+
+        # Leyenda
+        plt.legend(fontsize=7, loc='best')
+
+        # Ajustar límites para que Nyquist quede visible a la derecha
+        plt.xlim(0, 0.55)
+        plt.ylim(0.35, 1.05)
+
+        # Guardar figura
+        fname = os.path.join(directory, f"MTF_ALT_cut_band_{band}.png")
+        plt.tight_layout()
+        plt.show()
+        plt.close()
+
+        self.logger.info(f"Saved MTF plot (ALT only) to {fname}")
+
+        # --- También imprime el valor del MTF en Nyquist ---
+        nyq_idx = np.argmin(np.abs(fnAlt_pos - 0.5))
+        sys_val = Hcuts["System MTF"][nyq_idx]
+        self.logger.info(f"MTF@Nyquist (ALT, band {band}) = {sys_val:.3f}")
+        print(f"MTF@Nyquist (ALT, band {band}) = {sys_val:.3f}")
