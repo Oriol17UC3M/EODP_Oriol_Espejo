@@ -138,6 +138,7 @@ class detectionPhase(initIsm):
         """
         #TODO
         toa[:, 5] = toa[:, 5] * (1 - bad_pix_red)
+
         return toa
 
     def prnu(self, toa, kprnu):
@@ -149,6 +150,7 @@ class detectionPhase(initIsm):
         """
         #TODO
         #kprnu = 0.04
+
         prnu_eff = np.random.normal(0, 1, toa.shape[1]) # Standard normal distribution
         aux = (prnu_eff * kprnu) + 1
         toa = aux * toa
@@ -173,4 +175,5 @@ class detectionPhase(initIsm):
         sd = ds_A_coeff * ((T / Tref)**3) * np.exp(-ds_B_coeff * ((1 / T) - (1 / Tref)))
         ds = sd * (1 + dsnu)
         toa = toa + ds
+
         return toa
