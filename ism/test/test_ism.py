@@ -153,24 +153,3 @@ print("After Irradiance → Photons: Photons [p+]")
 print("After Photons → Electrons: Electrons [e-]")
 print("After Electrons → Volts: Volts [V]")
 print("After Volts → Digital: Digital Numbers [-]\n")
-
-print("Criteria 3")
-
-# Rutas de salida de la detección (TOA en e-)
-
-
-FWC = 420000
-
-# Lista de bandas ya cargadas
-toa_bands = [toa_0, toa_1, toa_2, toa_3]
-band_names = ['VNIR-0', 'VNIR-1', 'VNIR-2', 'VNIR-3']
-
-saturated_percent = []
-
-# Revisión de saturación considerando los píxeles recortados al FWC
-for i, toa in enumerate(toa_bands):
-    n_pixels = toa.size
-    saturated_pixels = np.sum(toa >= FWC)  # todos los píxeles que llegaron al FWC
-    pct_saturated = saturated_pixels / n_pixels * 100
-    saturated_percent.append(pct_saturated)
-    print(f"Band {band_names[i]}: Saturated pixels = {saturated_pixels}, Percentage = {pct_saturated:.2f}%")

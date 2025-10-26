@@ -71,5 +71,20 @@ class videoChainPhase(initIsm):
         #TODO
         toa_dn = np.round(((toa - min_voltage) / (max_voltage - min_voltage)) * (2**bit_depth - 1))
         toa_dn = np.clip(toa_dn, 0, 2 ** bit_depth - 1)
+        # Calculate digital saturation limits
+        max_value = (1 << bit_depth) - 1  # Maximum DN for given bit depth
+
+        # Identify saturated pixels
+        is_saturated_high = toa_dn >= max_value
+        is_saturated_low = toa_dn <= 0
+
+        # Combine masks
+        saturated_pixels_mask = is_saturated_high | is_saturated_low
+
+        # Compute percentage of saturated pixels
+        saturated_percentage = (np.count_nonzero(saturated_pixels_mask) / toa_dn.size) * 100.0
+
+        print(f"The saturated pixels percentatge is -> ", saturated_percentage)
+
         return toa_dn
 
